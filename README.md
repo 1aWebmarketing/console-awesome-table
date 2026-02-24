@@ -38,11 +38,11 @@ class ShowUsers extends Command
         $this->title('Users');
 
         $rows = [
-            ['id' => 1, 'name' => 'Alice', 'email' => 'alice@example.com'],
-            ['id' => 2, 'name' => 'Bob',   'email' => 'bob@example.com'],
+            ['id' => 1, 'name' => 'Alice', 'email' => 'alice@example.com', 'gender' => 'FEMALE'],
+            ['id' => 2, 'name' => 'Bob',   'email' => 'bob@example.com', 'gender' => 'MALE'],
         ];
 
-        // Headings provided explicitly
+        // Headings provided explicitly, left over heading keys gets shown as info
         $this->awesomeTable(
             ['id', 'name', 'email'],
             $rows,
