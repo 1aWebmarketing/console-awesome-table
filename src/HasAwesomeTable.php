@@ -118,6 +118,8 @@ trait HasAwesomeTable
             return;
         }
 
+        asort($keys);
+        
         $this->info('Undisplayed fields: ' . implode(', ', $keys));
     }
 }
