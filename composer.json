@@ -1,0 +1,24 @@
+{
+    "name": "oneawebmarketing/console-awesome-table",
+    "description": "Awesome Table for data display in the console",
+    "type": "library",
+    "require": {
+        "laravel/framework": "^12.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "LogHub\\": "src/"
+        }
+    },
+    "extra": {
+    },
+    "authors": [
+        {
+            "name": "1aWebmarketing",
+            "email": "info@1awebmarketing.de"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
