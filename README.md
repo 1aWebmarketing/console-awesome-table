@@ -38,8 +38,8 @@ class ShowUsers extends Command
         $this->title('Users');
 
         $rows = [
-            ['id' => 1, 'name' => 'Alice', 'email' => 'alice@example.com', 'gender' => 'FEMALE'],
-            ['id' => 2, 'name' => 'Bob',   'email' => 'bob@example.com', 'gender' => 'MALE'],
+            ['id' => 1, 'name' => 'Alice', 'email' => 'alice@example.com', 'gender' => 'FEMALE', 'age' => 42],
+            ['id' => 2, 'name' => 'Bob',   'email' => 'bob@example.com', 'gender' => 'MALE', 'age' => 20],
         ];
 
         // Headings provided explicitly, left over heading keys gets shown as info
@@ -51,6 +51,23 @@ class ShowUsers extends Command
         return self::SUCCESS;
     }
 }
+```
+
+Outputs:
+```bash
+#########################
+#                       #
+#         Users         #
+#                       #
+#########################
+
++----+-------+-------------------+
+| id | name  | email             |
++----+-------+-------------------+
+| 1  | Alice | alice@example.com |
+| 2  | Bob   | bob@example.com   |
++----+-------+-------------------+
+Undisplayed fields: gender, age
 ```
 
 Run the command:
