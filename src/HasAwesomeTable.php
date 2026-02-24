@@ -2,6 +2,8 @@
 
 namespace AwesomeTable;
 
+use Symfony\Component\Console\Terminal;
+
 trait HasAwesomeTable
 {
     private function title($title)
