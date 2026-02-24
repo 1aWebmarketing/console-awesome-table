@@ -27,6 +27,7 @@ trait HasAwesomeTable
         if ($headings === []) {
             $firstRow = $rows[0];
             $headings = array_keys((array)$firstRow);
+            $undisplayedKeys = [];
         } else {
             $firstRow = (array)$rows[0];
             $allKeys = array_keys($firstRow);
