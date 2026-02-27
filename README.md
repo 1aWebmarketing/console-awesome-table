@@ -88,9 +88,57 @@ The `HasAwesomeTable` trait (defined in `src/AwesomeTable.php`) adds the followi
 - **`awesomeTable(array $headings = [], array $rows = [], bool $showUnusedKeys = true): void`**  
   Renders tabular data using the underlying `table()` helper on the command when it fits in the terminal width; otherwise, it falls back to a compact block layout.
 
-  - **`$headings`**: A list of column names. If empty, the keys from the first row are used.
+  - **`$headings`**: A list of column names. If empty, the keys from the first row are used. Headings support two directives:
+    - **Dot notation** (`address.city`) — access nested array/object values via Laravel's `data_get()`.
+    - **`implode:` prefix** (`implode:tags`) — joins array values with `", "`, filtering out empty entries. The column header displays without the prefix.
   - **`$rows`**: An array of associative arrays, one per row.
   - **`$showUnusedKeys`**: When `true`, any keys present in the first row but not displayed as headings are listed as "Undisplayed fields" after the output.
+
+### Dot notation
+
+Headings support Laravel's dot notation to access nested array or object values:
+
+```php
+$rows = [
+    ['id' => 1, 'name' => 'Alice', 'address' => ['city' => 'Berlin', 'zip' => '10115']],
+    ['id' => 2, 'name' => 'Bob',   'address' => ['city' => 'Hamburg', 'zip' => '20095']],
+];
+
+$this->awesomeTable(['id', 'name', 'address.city'], $rows);
+```
+
+```
++----+-------+--------------+
+| id | name  | address.city |
++----+-------+--------------+
+| 1  | Alice | Berlin       |
+| 2  | Bob   | Hamburg      |
++----+-------+--------------+
+```
+
+### Imploding array values
+
+Prefix a heading with `implode:` to join array values with `", "` instead of showing `+ Array`. Empty entries are filtered out before joining.
+
+```php
+$rows = [
+    ['name' => 'Alice', 'tags' => ['admin', 'editor', '']],
+    ['name' => 'Bob',   'tags' => ['viewer']],
+];
+
+$this->awesomeTable(['name', 'implode:tags'], $rows);
+```
+
+```
++-------+---------------+
+| name  | tags          |
++-------+---------------+
+| Alice | admin, editor |
+| Bob   | viewer        |
++-------+---------------+
+```
+
+The column header displays as `tags` (without the `implode:` prefix). Dot notation and `implode:` can be combined: `implode:meta.tags`.
 
 ### Automatic headings
 

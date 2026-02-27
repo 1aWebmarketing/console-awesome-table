@@ -24,6 +24,17 @@ trait HasAwesomeTable
             return;
         }
 
+        // Parse special directives in headings (e.g. 'implode:tags').
+        $implodeKeys = [];
+        $headings = array_map(function ($heading) use (&$implodeKeys) {
+            if (str_starts_with($heading, 'implode:')) {
+                $field = substr($heading, 8);
+                $implodeKeys[] = $field;
+                return $field;
+            }
+            return $heading;
+        }, $headings);
+
         if ($headings === []) {
             $firstRow = $rows[0];
             $headings = array_keys((array)$firstRow);
@@ -40,7 +51,13 @@ trait HasAwesomeTable
             $line = [];
             foreach ($headings as $heading) {
                 $value = data_get($row, $heading);
-                $line[$heading] = $value === null ? '' : (is_array($value) ? '+ Array' : $value);
+                if ($value === null) {
+                    $line[$heading] = '';
+                } elseif (is_array($value)) {
+                    $line[$heading] = in_array($heading, $implodeKeys) ? implode(', ', array_filter($value)) : '+ Array';
+                } else {
+                    $line[$heading] = $value;
+                }
             }
             $data[] = $line;
         }
