@@ -39,7 +39,7 @@ trait HasAwesomeTable
         foreach ($rows as $row) {
             $line = [];
             foreach ($headings as $heading) {
-                $value = $row[$heading] ?? null;
+                $value = data_get($row, $heading);
                 $line[$heading] = $value === null ? '' : (is_array($value) ? '+ Array' : $value);
             }
             $data[] = $line;
@@ -89,7 +89,7 @@ trait HasAwesomeTable
         foreach ($rows as $index => $rowData) {
             $lines = [];
             foreach ($headings as $heading) {
-                $value = (string)($rowData[$heading] ?? '');
+                $value = (string) data_get($rowData, $heading, '');
                 $lines[] = str_pad($heading, $maxKeyLength, '.') . $separator . $value;
             }
 
@@ -119,7 +119,7 @@ trait HasAwesomeTable
         }
 
         asort($keys);
-        
+
         $this->info('Undisplayed fields: ' . implode(', ', $keys));
     }
 }
