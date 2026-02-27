@@ -89,7 +89,7 @@ trait HasAwesomeTable
         foreach ($rows as $index => $rowData) {
             $lines = [];
             foreach ($headings as $heading) {
-                $value = (string) data_get($rowData, $heading, '');
+                $value = (string)($rowData[$heading] ?? '');
                 $lines[] = str_pad($heading, $maxKeyLength, '.') . $separator . $value;
             }
 
